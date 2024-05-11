@@ -1,8 +1,6 @@
 package product
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
 )
 
@@ -14,9 +12,5 @@ func CreateHandler() *Handler {
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
 	router.PathPrefix("/products")
-
-	router.HandleFunc("/", h.GetAllHandler)
-}
-
-func (h *Handler) GetAllHandler(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("GET /", h.GetAllHandler)
 }

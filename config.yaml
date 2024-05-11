@@ -1,0 +1,5 @@
+
+environment: production
+http_port: 8080
+jwt_secret: "my_secret_key"
+db_connection_string: "root:@Qwe112233@tcp(localhost:3306)/my_db?parseTime=true"
