@@ -6,41 +6,28 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/modsyan/go_ecommerce/modules/cart"
-	"github.com/modsyan/go_ecommerce/modules/healthz"
-	"github.com/modsyan/go_ecommerce/modules/product"
-	"github.com/modsyan/go_ecommerce/modules/user"
 )
 
 type APIServer struct {
-	addr string
-	db   *sql.DB
+	addr   string
+	router *mux.Router
+	db     *sql.DB
+	routes []RouteConfig
 }
 
 func NewAPIServer(addr string, db *sql.DB) *APIServer {
 	return &APIServer{
-		addr: addr,
-		db:   db,
+		addr:   addr,
+		router: mux.NewRouter(),
+		db:     db,
 	}
 }
 
 func (s *APIServer) Run() error {
-	router := mux.NewRouter()
-	subrouter := router.PathPrefix("/api/v1").Subrouter()
-
-	healthzHandler := healthz.CreateHandler()
-	healthzHandler.RegisterRoutes(subrouter)
-
-	userHandler := user.CreateHandler()
-	userHandler.RegisterRoutes(subrouter)
-
-	cartHandler := cart.CreateHandler()
-	cartHandler.RegisterRoutes(subrouter)
-
-	productHandler := product.CreateHandler()
-	productHandler.RegisterRoutes(subrouter)
-
 	log.Println("Listening on", s.addr)
 
-	return http.ListenAndServe(s.addr, router)
+	s.SetupRoutes()
+	s.applyMiddleware()
+
+	return http.ListenAndServe(s.addr, s.router)
 }
