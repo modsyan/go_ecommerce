@@ -15,5 +15,5 @@ func CreateHandler() *Handler {
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/healthz", h.HealthzHandler)
+	router.HandleFunc("", h.HealthyHandler).Methods("GET")
 }

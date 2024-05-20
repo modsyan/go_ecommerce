@@ -5,11 +5,10 @@ import (
 	"net/http"
 )
 
-func (h *Handler) HealthzHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) HealthyHandler(w http.ResponseWriter, r *http.Request) {
 	health := HealthResponse{Status: "healthy"}
 
 	jsonResponse, err := json.Marshal(health)
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

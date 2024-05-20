@@ -6,20 +6,24 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	// "github.com/go-chi/chi"
 )
 
 type APIServer struct {
 	addr   string
 	router *mux.Router
-	db     *sql.DB
-	routes []RouteConfig
+	// router     chi.Router
+	db         *sql.DB
+	routes     []RouteConfig
+	basePrefix string
 }
 
-func NewAPIServer(addr string, db *sql.DB) *APIServer {
+func NewAPIServer(addr string, db *sql.DB, basePrefix string) *APIServer {
 	return &APIServer{
-		addr:   addr,
-		router: mux.NewRouter(),
-		db:     db,
+		addr:       addr,
+		router:     mux.NewRouter(),
+		db:         db,
+		basePrefix: basePrefix,
 	}
 }
 

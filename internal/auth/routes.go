@@ -12,6 +12,5 @@ func CreateHandler() *Handler {
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/login", h.LoginHandler)
-
 	router.HandleFunc("/register", h.RegisterHandler)
 }

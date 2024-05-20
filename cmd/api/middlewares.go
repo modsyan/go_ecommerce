@@ -6,6 +6,9 @@ import (
 )
 
 func (s *APIServer) applyMiddleware() {
+	// c := cors.
+	// s.router.Use()
+
 	s.router.Use(loggingMiddleware)
 }
 

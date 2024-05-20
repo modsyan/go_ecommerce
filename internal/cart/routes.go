@@ -11,7 +11,8 @@ func CreateHandler() *Handler {
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.PathPrefix("/carts")
-
-	router.HandleFunc("/", h.GetCartHandler)
+	router.HandleFunc("/", h.GetCartlandler).Methods("GET")
+	router.HandleFunc("/", h.AddItemCartHandler).Methods("POST")
+	router.HandleFunc("/", h.EditCartHandler).Methods("PUT")
+	router.HandleFunc("/", h.RemoveItemCartHandler).Methods("DELETE")
 }

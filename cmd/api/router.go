@@ -13,19 +13,6 @@ type RouteConfig struct {
 	Prefix   string
 }
 
-const basePrefixer = "/api/v1"
-
-// func (s *APIServer) AddRoute(prefix string, register func(router *mux.Router)) {
-// 	s.routes = append(s.routes, RouteConfig{Register: register, Prefix: prefix})
-// }
-//
-// func (s *APIServer) IntializeRoutes() {
-// 	s.AddRoute("/healhz", healthz.CreateHandler().RegisterRoutes)
-// 	s.AddRoute("/user", user.CreateHandler().RegisterRoutes)
-// 	s.AddRoute("/cart", cart.CreateHandler().RegisterRoutes)
-// 	s.AddRoute("/product", product.CreateHandler().RegisterRoutes)
-// }
-
 func intializeRoutes() []RouteConfig {
 	return []RouteConfig{
 		{Prefix: "/healthz", Register: healthz.CreateHandler().RegisterRoutes},
@@ -38,8 +25,8 @@ func intializeRoutes() []RouteConfig {
 func (s *APIServer) SetupRoutes() {
 	s.routes = intializeRoutes()
 	for _, route := range s.routes {
-		path := basePrefixer + route.Prefix
-		subRouter := s.router.PathPrefix(path).Subrouter()
+		fullPath := s.basePrefix + route.Prefix
+		subRouter := s.router.PathPrefix(fullPath).Subrouter()
 		route.Register(subRouter)
 	}
 }
